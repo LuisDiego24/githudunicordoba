@@ -24,13 +24,6 @@ opcion_Nom_municipio = st.sidebar.selectbox(label="Selecione un municipio",
 
 otras_variables=list(datos.columns)
 otras_variables.pop(otras_variables.index('Nom_municipio'))
-otras_variables.pop(otras_variables.index('descripcion_uso_vivienda'))
-otras_variables.pop(otras_variables.index('descripcion_tipo_vivienda'))
-otras_variables.pop(otras_variables.index('descripcion_condicion_ocupacion'))
-otras_variables.pop(otras_variables.index('total_hogares'))
-otras_variables.pop(otras_variables.index('descripcion_material_pared'))
-otras_variables.pop(otras_variables.index('descripcion_material_piso'))
-otras_variables.pop(otras_variables.index('descripcion_tipo_servicio_sanitario'))
 otras_variables.pop(otras_variables.index('estrato'))
 
 opcion_y = st.sidebar.selectbox(label="Selecione un servicio",
