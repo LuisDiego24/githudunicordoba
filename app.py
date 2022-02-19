@@ -40,8 +40,5 @@ def plot_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str)
 
 
 plot, d = plot_simple(datos, "estrato", opcion_y, opcion_Nom_municipio)
-st.plotly_chart(plot)
+st.plotly_chart(plot,use_container_width=True)
 st.write(d)
-
-
-
