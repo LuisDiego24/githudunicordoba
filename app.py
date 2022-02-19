@@ -24,6 +24,7 @@ opcion_Nom_municipio = st.sidebar.selectbox(label="Selecione un municipio",
 otras_variables=list(datos.columns)
 otras_variables.pop(otras_variables.index('Nom_municipio'))
 otras_variables.pop(otras_variables.index('estrato'))
+otras_variables.pop(otras_variables.index('total_hogares'))
 
 opcion_y = st.sidebar.selectbox(label="Selecione un servicio",
                                     options=otras_variables)
@@ -51,6 +52,6 @@ def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
     return fig, data
 
 
-pl, c = pie_simple(datos, "estrato", opcion_y, opcion_Nom_municipio)
+pl, c = pie_simple(datos, "total_hogares", opcion_y, opcion_Nom_municipio)
 st.plotly_chart(pl,use_container_width=True)
 st.write(c)
