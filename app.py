@@ -1,6 +1,8 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 st.set_page_config(layout="wide")
@@ -34,7 +36,7 @@ st.sidebar.markdown("---")
 def plot_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
     data = df.copy()
     data = datos[datos["Nom_municipio"] == Nom_municipio_filter]
-    fig = px.histogram(data, x=x, y=y)
+    fig = px.histogram(data, x=x, y=y, color=opcion_y)
     return fig, data
 
 
