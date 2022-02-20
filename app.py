@@ -8,7 +8,6 @@ import numpy as np
 st.set_page_config(layout="wide")
 
 st.header("CENSO CORDOBA:")
-st.sidebar.markdown("---")
 
 @st.cache
 def cargar_datos(filename:str):
@@ -34,6 +33,8 @@ opcion_y = st.sidebar.selectbox(label="Selecione un servicio",
                                     options=otras_variables)
 
 st.sidebar.markdown("---")
+
+st.header("Graficos de los servicios publico segun su estrato en cordoba: ")
 
 @st.cache
 def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
@@ -66,6 +67,8 @@ variables.pop(variables.index('servicio_internet'))
 
 opcion_z = st.sidebar.selectbox(label="Selecione su servicio",
                                     options=variables)
+
+st.header("Grafica estrato social en su municipio: ")
 
 @st.cache
 def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
