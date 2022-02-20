@@ -40,7 +40,7 @@ def plot_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str)
 
 plot, d = plot_simple(datos, opcion_y, "total_hogares", opcion_Nom_municipio)
 st.plotly_chart(plot,use_container_width=True)
-st.write(d)
+#st.write(d)
 
 
 @st.cache
@@ -53,4 +53,4 @@ def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
 
 pl, c = pie_simple(datos, "total_hogares", opcion_y, opcion_Nom_municipio)
 st.plotly_chart(pl,use_container_width=True)
-st.write(c)
+#st.write(c)
