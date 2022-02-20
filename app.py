@@ -65,7 +65,7 @@ variables.pop(variables.index('servicio_alcantarillado'))
 variables.pop(variables.index('recoleccion_basuras'))
 variables.pop(variables.index('servicio_internet'))
 
-opcion_z = st.sidebar.selectbox(label="Selecione su servicio",
+opcion_z = st.sidebar.selectbox(label="",
                                     options=variables)
 
 st.header("Grafica estrato social en su municipio: ")
