@@ -1,8 +1,6 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-import matplotlib.pyplot as plt
-import numpy as np
 
 
 st.set_page_config(layout="wide")
@@ -43,3 +41,16 @@ def plot_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str)
 plot, d = plot_simple(datos, "total_hogares", opcion_y, opcion_Nom_municipio)
 st.plotly_chart(plot,use_container_width=True)
 st.write(d)
+
+
+@st.cache
+def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
+    data = df.copy()
+    data = data[data["Nom_municipio"] == Nom_municipio_filter]
+    fig = px.pie(data, values=x, names=y)
+    return fig, data
+
+
+pl, c = pie_simple(datos, "total_hogares", opcion_y, opcion_Nom_municipio)
+st.plotly_chart(pl,use_container_width=True)
+st.write(c)
