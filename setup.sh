@@ -2,7 +2,7 @@
 mkdir -p ~/.streamlit/
 echo "
 [theme]
-base='dark'
+base='light'
 primaryColor='#b7e0b7'
 secondaryBackgroundColor='#acdaac'
 textColor='#000000'
