@@ -6,7 +6,6 @@ import numpy as np
 
 
 st.set_page_config(layout="wide")
-
 st.header("CENSO CORDOBA:")
 
 @st.cache
@@ -14,14 +13,15 @@ def cargar_datos(filename:str):
     return pd.read_csv(filename)
 
 datos = cargar_datos('depurado.csv')
-st.write(datos, use_container_width=True)
 
 
-st.sidebar.markdown("## SERVICIOS PUBLICOS EN LOS HOGARES DE CORDOBA SEGUN SU ESTRATO")
+st.sidebar.markdown("## Vivienda que cuentan con servicios publico por municipios")
 
-lista_estrato = list(datos['estrato'].unique())
-opcion_estrato = st.sidebar.selectbox(label="Selecione su estrato",
-                                    options=lista_estrato)
+st.sidebar.markdown("---")
+
+lista_municipio = list(datos['Nom_municipio'].unique())
+opcion_municipio = st.sidebar.selectbox(label="Selecione un municipio",
+                                    options=lista_municipio)
 
 
 otras_variables=list(datos.columns)
@@ -34,24 +34,22 @@ opcion_y = st.sidebar.selectbox(label="Selecione un servicio",
 
 st.sidebar.markdown("---")
 
-st.header("Graficos de los servicios publico segun su estrato en cordoba: ")
-
 @st.cache
 def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
     data = df.copy()
-    data = data[data["estrato"] == Nom_municipio_filter]
+    data = data[data["Nom_municipio"] == Nom_municipio_filter]
     fig = px.histogram(data, x=x, y=y, color=opcion_y)
     return fig, data
 
 
-pl, c = pie_simple(datos, opcion_y, "total_hogares", opcion_estrato)
+pl, c = pie_simple(datos, opcion_y, "total_hogares", opcion_municipio)
 st.plotly_chart(pl,use_container_width=True)
 #st.write(c)
 
-st.sidebar.markdown("## CONOCE LOS ESTRATO SOCIALES QUE ESTAN EN SU MUNICIPIO")
+st.markdown("## Conozca lo estrato sociales que estan en su municipio: ")
 
 lista_Nom_municipio = list(datos['Nom_municipio'].unique())
-opcion_Nom_municipio = st.sidebar.selectbox(label="Selecione su municipio",
+opcion_Nom_municipio = st.selectbox(label="Selecione su municipio",
                                     options=lista_Nom_municipio)
 
 
@@ -65,10 +63,8 @@ variables.pop(variables.index('servicio_alcantarillado'))
 variables.pop(variables.index('recoleccion_basuras'))
 variables.pop(variables.index('servicio_internet'))
 
-opcion_z = st.sidebar.selectbox(label="auto seleccionado",
-                                    options=variables)
-
-st.header("Grafica estrato social en su municipio: ")
+opcion_z = st.radio(label=" ",
+                    options=variables)
 
 @st.cache
 def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
@@ -81,3 +77,80 @@ def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
 pl, c = pie_simple(datos, "total_hogares", opcion_z, opcion_Nom_municipio)
 st.plotly_chart(pl,use_container_width=True)
 #st.write(c)
+
+st.markdown("## Servicio basico de un hogar por municipio: ")
+lista_muni = list(datos['Nom_municipio'].unique())
+opcion_muni = st.selectbox(label="selecione el municipio", options=lista_muni)
+col1, col2, col3 = st.columns(3)
+with col1:
+    varia = list(datos.columns)
+    varia.pop(varia.index('Nom_municipio'))
+    varia.pop(varia.index('total_hogares'))
+    varia.pop(varia.index('estrato'))
+    varia.pop(varia.index('servicio_gas'))
+    varia.pop(varia.index('servicio_acueducto'))
+    varia.pop(varia.index('servicio_alcantarillado'))
+    varia.pop(varia.index('recoleccion_basuras'))
+    varia.pop(varia.index('servicio_internet'))
+    opcion_a = st.radio(label="",
+                        options=varia)
+
+
+    @st.cache
+    def pies_simple(melted_asdate: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
+        data = melted_asdate.copy()
+        data = data[data["Nom_municipio"] == Nom_municipio_filter]
+        fig = px.pie(data, values=x, names=y)
+        return fig, data
+
+
+    plotE, c = pie_simple(datos, "total_hogares", opcion_a, opcion_muni)
+    st.plotly_chart(plotE, use_container_width=True)
+with col2:
+    varias = list(datos.columns)
+    varias.pop(varias.index('Nom_municipio'))
+    varias.pop(varias.index('total_hogares'))
+    varias.pop(varias.index('estrato'))
+    varias.pop(varias.index('servicio_gas'))
+    varias.pop(varias.index('energia_electrica'))
+    varias.pop(varias.index('servicio_alcantarillado'))
+    varias.pop(varias.index('recoleccion_basuras'))
+    varias.pop(varias.index('servicio_internet'))
+    opcion_a = st.radio(label="",
+                        options=varias)
+
+
+    @st.cache
+    def pie_simple(melted_asdate: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
+        data = melted_asdate.copy()
+        data = data[data["Nom_municipio"] == Nom_municipio_filter]
+        fig = px.pie(data, values=x, names=y)
+        return fig, data
+
+
+    plotA, c = pie_simple(datos, "total_hogares", opcion_a, opcion_muni)
+    st.plotly_chart(plotA, use_container_width=True)
+with col3:
+    variacines = list(datos.columns)
+    variacines.pop(variacines.index('Nom_municipio'))
+    variacines.pop(variacines.index('total_hogares'))
+    variacines.pop(variacines.index('estrato'))
+    variacines.pop(variacines.index('servicio_acueducto'))
+    variacines.pop(variacines.index('energia_electrica'))
+    variacines.pop(variacines.index('servicio_alcantarillado'))
+    variacines.pop(variacines.index('recoleccion_basuras'))
+    variacines.pop(variacines.index('servicio_internet'))
+    opcion_a = st.radio(label=" ",
+                        options=variacines)
+
+
+    @st.cache
+    def pie_simple(melted_asdate: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
+        data = melted_asdate.copy()
+        data = data[data["Nom_municipio"] == Nom_municipio_filter]
+        fig = px.pie(data, values=x, names=y)
+        return fig, data
+
+
+    plotG, c = pie_simple(datos, "total_hogares", opcion_a, opcion_muni)
+    st.plotly_chart(plotG, use_container_width=True)
