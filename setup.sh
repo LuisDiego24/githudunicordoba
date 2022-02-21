@@ -2,10 +2,11 @@
 mkdir -p ~/.streamlit/
 echo "
 [theme]
-base='dark'
-primaryColor='##7FFFD4'
-secondaryBackgroundColor='#2c2c2d'
-font='monospace'
+base="light"
+primaryColor="#b7e0b7"
+secondaryBackgroundColor="#acdaac"
+textColor="#000000"
+font="serif"
 [server]
 headless = true
 enableCORS=false
