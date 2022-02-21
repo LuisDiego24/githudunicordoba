@@ -4,7 +4,7 @@ import plotly.express as px
 
 st.set_page_config(layout="wide")
 st.sidebar.image('dane.png')
-st.sidebar.image('gobernacion.png')
+st.sidebar.image('https://www.cordoba.gov.co/info/cordoba_se/media/bloque29.png')
 st.sidebar.markdown("## Censo en el departamento de cordoba")
 st.sidebar.markdown("Lista oficial de los habitantes de cordoba, con indicación de sus condiciones sociales, económicas, etc.")
 ##-------------------------------------------------------------------
