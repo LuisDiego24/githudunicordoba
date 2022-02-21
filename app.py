@@ -6,8 +6,10 @@ import numpy as np
 
 
 st.set_page_config(layout="wide")
-st.sidebar.markdown("# Opciones ")
-st.header("Hogares censados en el departamento de cordoba")
+st.sidebar.image('dane.png')
+st.sidebar.image('gobernacion.png')
+st.sidebar.markdown("## Censo en el departamento de cordoba")
+st.sidebar.markdown("Lista oficial de los habitantes de cordoba, con indicación de sus condiciones sociales, económicas, etc.")
 ##-------------------------------------------------------------------
 @st.cache
 def cargar_datos(filename:str):
@@ -16,10 +18,15 @@ def cargar_datos(filename:str):
 datos = cargar_datos('depurado.csv')
 
 
-st.markdown("## Viviendas que cuentan con servicios en cordoba:")
+st.markdown("### Hoagares que cuentan con servicios en cordoba:")
 
 st.sidebar.markdown("---")
 
+st.sidebar.markdown("Escoge un municipio y un servicio publico mira los hogares cuentan con estos: ")
+
+lista_estrato = list(datos['Nom_municipio'].unique())
+opcion_estrato = st.sidebar.selectbox(label="Selecione el municipio",
+                                    options=lista_estrato)
 
 otras_variables = list(datos.columns)
 otras_variables.pop(otras_variables.index('Nom_municipio'))
@@ -29,27 +36,26 @@ otras_variables.pop(otras_variables.index('total_hogares'))
 opcion_y = st.sidebar.selectbox(label="Selecione un servicio",
                                     options=otras_variables)
 
-lista_estrato = list(datos['estrato'].unique())
-opcion_estrato = st.sidebar.selectbox(label="Selecione el estrato",
-                                    options=lista_estrato)
-
 st.sidebar.markdown("---")
 
 @st.cache
 def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, estrato_filter: str):
     data = df.copy()
-    data = data[data["estrato"] == estrato_filter]
-    fig = px.histogram(data, x=x, y=y, color=opcion_y)
+    data = data[data["Nom_municipio"] == estrato_filter]
+    fig = px.histogram(data, x=x, y=y, color_discrete_sequence=px.colors.sequential.Bluered)
     return fig, data
 
 
 pl, c = pie_simple(datos, opcion_y, "total_hogares", opcion_estrato)
 st.plotly_chart(pl,use_container_width=True)
 
-st.markdown("## ¿Cuantos hogares hay un municipio y cual es su estrato?")
+st.markdown("selecione su municipio y podra resolver las siente preguntas, "
+            "¿Cuantos hogares hay un vivienda y cual es su estrato?,  "
+            "¿Conozca cuantos hogares hay en un municipio y su estrato social?, "
+            "y ¿Cuantos hogares en cordoba cuentan con servios basicos, como energia electrica, servicio de aceducto y gas?")
 
 lista_nom = list(datos['Nom_municipio'].unique())
-opcion_nom = st.selectbox(label="Selecione el municipio: ",
+opcion_nom = st.selectbox(label="Selecione su municipio: ",
                           options=lista_nom)
 
 otras_variable = list(datos.columns)
@@ -76,8 +82,6 @@ def p_simple(df: pd.DataFrame, x: pd.DataFrame, y, N_filter: str):
 p, c = p_simple(datos, opcion_y, "total_hogares", opcion_nom)
 st.plotly_chart(p, use_container_width=True)
 
-st.markdown("## ¿Conozca lo estrato sociales que estan en su municipio? ")
-
 variables = list(datos.columns)
 variables.pop(variables.index('Nom_municipio'))
 variables.pop(variables.index('total_hogares'))
@@ -102,8 +106,6 @@ def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
 pl, c = pie_simple(datos, "total_hogares", opcion_z, opcion_nom)
 st.plotly_chart(pl,use_container_width=True)
 
-
-st.markdown("## ¿Que servicio basico hay en un hogar por municipio? ")
 col1, col2, col3 = st.columns(3)
 with col1:
     varia = list(datos.columns)
@@ -123,7 +125,7 @@ with col1:
     def luz_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
         data = df.copy()
         data = data[data["Nom_municipio"] == Nom_municipio_filter]
-        fig = px.pie(data, values=x, names=y)
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdPu)
         return fig, data
 
 
@@ -147,7 +149,7 @@ with col2:
     def agua_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
         data = df.copy()
         data = data[data["Nom_municipio"] == Nom_municipio_filter]
-        fig = px.pie(data, values=x, names=y)
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdPu)
         return fig, data
 
 
@@ -170,7 +172,7 @@ with col3:
     def gas_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
         data = df.copy()
         data = data[data["Nom_municipio"] == Nom_municipio_filter]
-        fig = px.pie(data, values=x, names=y)
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdPu)
         return fig, data
 
     plotG, c = pie_simple(datos, "total_hogares", opcion_a, opcion_nom)
