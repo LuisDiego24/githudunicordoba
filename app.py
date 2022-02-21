@@ -2,9 +2,9 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
-st.set_page_config(layout="wide")
-st.sidebar.image('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Colombia_Dane_logo.svg/1280px-Colombia_Dane_logo.svg.png')
-st.sidebar.image('https://www.cordoba.gov.co/info/cordoba_se/media/bloque29.png')
+st.set_page_config(layout="wide",
+                   page_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Colombia_Dane_logo.svg/1280px-Colombia_Dane_logo.svg.png",
+                   page_title="Dane")
 st.sidebar.markdown("## Censo en el departamento de cordoba")
 st.sidebar.markdown("Lista oficial de los habitantes de cordoba, con indicación de sus condiciones sociales, económicas, etc.")
 ##-------------------------------------------------------------------
