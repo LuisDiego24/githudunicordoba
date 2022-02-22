@@ -72,7 +72,7 @@ def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
 pl, c = pie_simple(datos, "total_hogares", opcion_z, opcion_nom)
 st.plotly_chart(pl,use_container_width=True)
 
-st.markdown("Grafica que muestra el porcentaje  y el total de hogares que si y no cuentan con servios publicos.")
+st.markdown("Grafica que muestra el porcentaje  y el total de hogares que Si O No cuentan con servios publicos.")
 
 col1, col2, col3 = st.columns(3)
 with col1:
