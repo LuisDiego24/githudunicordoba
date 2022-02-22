@@ -46,7 +46,7 @@ st.plotly_chart(pl,use_container_width=True)
 st.markdown("selecione su municipio y podra resolver las siente preguntas, "
             "¿Cuantos hogares hay un vivienda y cual es su estrato?,  "
             "¿Conozca cuantos hogares hay en un municipio y su estrato social?, "
-            "y ¿Cuantos hogares en cordoba cuentan con servios basicos, como energia electrica, servicio de aceducto y gas?")
+            "y ¿Cuantos hogares en cordoba cuentan con servios basicos, como energia electrica, servicio de aceducto, gas, etc.?")
 
 lista_nom = list(datos['Nom_municipio'].unique())
 opcion_nom = st.selectbox(label="Selecione su municipio: ",
