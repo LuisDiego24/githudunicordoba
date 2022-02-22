@@ -12,48 +12,16 @@ def cargar_datos(filename:str):
 datos = cargar_datos('depurado.csv')
 
 
-st.markdown("### Hogares que cuentan y no, con servicios en los municipios de cordoba:")
 
 st.sidebar.markdown("---")
 
-st.sidebar.markdown("Escoge un municipio y un servicio publico mira los hogares cuentan con estos: ")
-
-lista_estrato = list(datos['Nom_municipio'].unique())
-opcion_estrato = st.sidebar.selectbox(label="Selecione el municipio",
-                                    options=lista_estrato)
-
-otras_variables = list(datos.columns)
-otras_variables.pop(otras_variables.index('Nom_municipio'))
-otras_variables.pop(otras_variables.index('estrato'))
-otras_variables.pop(otras_variables.index('total_hogares'))
-
-opcion_y = st.sidebar.selectbox(label="Selecione un servicio",
-                                    options=otras_variables)
-
-st.sidebar.markdown("---")
-
-@st.cache
-def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, estrato_filter: str):
-    data = df.copy()
-    data = data[data["Nom_municipio"] == estrato_filter]
-    fig = px.histogram(data, x=x, y=y, color_discrete_sequence=px.colors.sequential.RdBu)
-    return fig, data
-
-
-pl, c = pie_simple(datos, opcion_y, "total_hogares", opcion_estrato)
-st.plotly_chart(pl,use_container_width=True)
-
-st.markdown("selecione su municipio y podra resolver las siente preguntas, "
-            "¿Cuantos hogares hay un vivienda y cual es su estrato?,  "
-            "¿Conozca cuantos hogares hay en un municipio y su estrato social?, "
-            "y ¿Cuantos hogares en cordoba cuentan con servios basicos, como energia electrica, servicio de aceducto, gas, etc.?")
 
 lista_nom = list(datos['Nom_municipio'].unique())
-opcion_nom = st.selectbox(label="Selecione su municipio: ",
+opcion_nom = st.sidebar.selectbox(label="Selecione su municipio: ",
                           options=lista_nom)
 
 otras_variable = list(datos.columns)
-otras_variable.pop(otras_variable.index('Nom_municipio'))
+otras_variable.pop(otras_variable.index('estrato'))
 otras_variable.pop(otras_variable.index('total_hogares'))
 otras_variable.pop(otras_variable.index('energia_electrica'))
 otras_variable.pop(otras_variable.index('servicio_gas'))
@@ -62,6 +30,8 @@ otras_variable.pop(otras_variable.index('servicio_alcantarillado'))
 otras_variable.pop(otras_variable.index('recoleccion_basuras'))
 otras_variable.pop(otras_variable.index('servicio_internet'))
 
+st.markdown("Grafica que muestra los hogares que pueden haber en una municipio.")
+
 opcion_y = st.radio(label=" ",
                     options=otras_variable)
 
@@ -69,7 +39,7 @@ opcion_y = st.radio(label=" ",
 def p_simple(df: pd.DataFrame, x: pd.DataFrame, y, N_filter: str):
     data = df.copy()
     data = data[data["Nom_municipio"] == N_filter]
-    fig = px.box(data, x=x, y=y, color_discrete_sequence=px.colors.sequential.RdBu)
+    fig = px.histogram(data, x=x, y=y, color_discrete_sequence=px.colors.sequential.RdBu)
     return fig, data
 
 
@@ -86,6 +56,8 @@ variables.pop(variables.index('servicio_alcantarillado'))
 variables.pop(variables.index('recoleccion_basuras'))
 variables.pop(variables.index('servicio_internet'))
 
+st.markdown("Grafica que muestra la sumatoria de los hogares por municipio y cual es estrato.")
+
 opcion_z = st.radio(label="  ",
                     options=variables)
 
@@ -100,6 +72,8 @@ def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
 pl, c = pie_simple(datos, "total_hogares", opcion_z, opcion_nom)
 st.plotly_chart(pl,use_container_width=True)
 
+st.markdown("Grafica que muestra el porcentaje  y el total de hogares que si y no cuentan con servios publicos.")
+
 col1, col2, col3 = st.columns(3)
 with col1:
     varia = list(datos.columns)
@@ -111,6 +85,7 @@ with col1:
     varia.pop(varia.index('servicio_alcantarillado'))
     varia.pop(varia.index('recoleccion_basuras'))
     varia.pop(varia.index('servicio_internet'))
+
     opcion_a = st.radio(label="",
                         options=varia)
 
