@@ -1,10 +1,11 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import matplotlib.pyplot as plt
+import numpy as np
 
-st.set_page_config(layout="wide",
-                   page_icon="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Colombia_Dane_logo.svg/1280px-Colombia_Dane_logo.svg.png",
-                   page_title="Dane")
+
+st.set_page_config(layout="wide")
 st.sidebar.markdown("## Censo en el departamento de cordoba")
 st.sidebar.markdown("Lista oficial de los habitantes de cordoba, con indicación de sus condiciones sociales, económicas, etc.")
 ##-------------------------------------------------------------------
@@ -15,7 +16,7 @@ def cargar_datos(filename:str):
 datos = cargar_datos('depurado.csv')
 
 
-st.markdown("### Hoagares que cuentan con servicios en cordoba:")
+st.markdown("### Hogares que cuentan y no, con servicios en los municipios de cordoba:")
 
 st.sidebar.markdown("---")
 
@@ -39,7 +40,7 @@ st.sidebar.markdown("---")
 def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, estrato_filter: str):
     data = df.copy()
     data = data[data["Nom_municipio"] == estrato_filter]
-    fig = px.histogram(data, x=x, y=y, color_discrete_sequence=px.colors.sequential.Bluered)
+    fig = px.histogram(data, x=x, y=y, color_discrete_sequence=px.colors.sequential.RdBu)
     return fig, data
 
 
@@ -72,7 +73,7 @@ opcion_y = st.radio(label=" ",
 def p_simple(df: pd.DataFrame, x: pd.DataFrame, y, N_filter: str):
     data = df.copy()
     data = data[data["Nom_municipio"] == N_filter]
-    fig = px.box(data, x=x, y=y, color=opcion_y)
+    fig = px.box(data, x=x, y=y, color_discrete_sequence=px.colors.sequential.RdBu)
     return fig, data
 
 
@@ -96,7 +97,7 @@ opcion_z = st.radio(label="  ",
 def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
     data = df.copy()
     data = data[data["Nom_municipio"] == Nom_municipio_filter]
-    fig = px.pie(data, values=x, names=y)
+    fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdBu)
     return fig, data
 
 
