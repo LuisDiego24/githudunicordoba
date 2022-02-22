@@ -4,7 +4,7 @@ echo "
 [theme]
 base='light'
 primaryColor='#ff0000'
-secondaryBackgroundColor='#838383'
+secondaryBackgroundColor='#c3c3c3'
 textColor='#000000'
 font='serif'
 [server]
