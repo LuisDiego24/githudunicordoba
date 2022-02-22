@@ -2,11 +2,9 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
-
 st.set_page_config(layout="wide")
 st.sidebar.markdown("## Censo en el departamento de cordoba")
 st.sidebar.markdown("Lista oficial de los habitantes de cordoba, con indicación de sus condiciones sociales, económicas, etc.")
-##-------------------------------------------------------------------
 @st.cache
 def cargar_datos(filename:str):
     return pd.read_csv(filename)
@@ -173,3 +171,76 @@ with col3:
 
     plotG, c = pie_simple(datos, "total_hogares", opcion_a, opcion_nom)
     st.plotly_chart(plotG, use_container_width=True)
+
+colum1, colum2, colum3 = st.columns(3)
+with colum1:
+    variar = list(datos.columns)
+    variar.pop(variar.index('Nom_municipio'))
+    variar.pop(variar.index('total_hogares'))
+    variar.pop(variar.index('estrato'))
+    variar.pop(variar.index('energia_electrica'))
+    variar.pop(variar.index('servicio_acueducto'))
+    variar.pop(variar.index('servicio_gas'))
+    variar.pop(variar.index('recoleccion_basuras'))
+    variar.pop(variar.index('servicio_internet'))
+    opcion_b = st.radio(label="          ",
+                        options=variar)
+
+
+    @st.cache
+    def alc_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
+        data = df.copy()
+        data = data[data["Nom_municipio"] == Nom_municipio_filter]
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdBu)
+        return fig, data
+
+    plotAc, c = alc_simple(datos, "total_hogares", opcion_b, opcion_nom)
+    st.plotly_chart(plotAc, use_container_width=True)
+
+with colum2:
+    otras = list(datos.columns)
+    otras.pop(otras.index('Nom_municipio'))
+    otras.pop(otras.index('total_hogares'))
+    otras.pop(otras.index('estrato'))
+    otras.pop(otras.index('servicio_gas'))
+    otras.pop(otras.index('energia_electrica'))
+    otras.pop(otras.index('servicio_acueducto'))
+    otras.pop(otras.index('servicio_alcantarillado'))
+    otras.pop(otras.index('servicio_internet'))
+    opcion_b = st.radio(label="      ",
+                        options=otras)
+
+
+    @st.cache
+    def basuras_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
+        data = df.copy()
+        data = data[data["Nom_municipio"] == Nom_municipio_filter]
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdBu)
+        return fig, data
+
+    plotB, c = basuras_simple(datos, "total_hogares", opcion_b, opcion_nom)
+    st.plotly_chart(plotB, use_container_width=True)
+
+with colum3:
+    otros = list(datos.columns)
+    otros.pop(otros.index('Nom_municipio'))
+    otros.pop(otros.index('total_hogares'))
+    otros.pop(otros.index('estrato'))
+    otros.pop(otros.index('servicio_acueducto'))
+    otros.pop(otros.index('energia_electrica'))
+    otros.pop(otros.index('servicio_gas'))
+    otros.pop(otros.index('servicio_alcantarillado'))
+    otros.pop(otros.index('recoleccion_basuras'))
+    opcion_b = st.radio(label="       ",
+                        options=otros)
+
+
+    @st.cache
+    def internet_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
+        data = df.copy()
+        data = data[data["Nom_municipio"] == Nom_municipio_filter]
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdBu)
+        return fig, data
+
+    plotI, c = internet_simple(datos, "total_hogares", opcion_b, opcion_nom)
+    st.plotly_chart(plotI, use_container_width=True)
