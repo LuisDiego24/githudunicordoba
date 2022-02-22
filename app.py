@@ -39,7 +39,7 @@ opcion_y = st.radio(label=" ",
 def p_simple(df: pd.DataFrame, x: pd.DataFrame, y, N_filter: str):
     data = df.copy()
     data = data[data["Nom_municipio"] == N_filter]
-    fig = px.histogram(data, x=x, y=y, color_discrete_sequence=px.colors.sequential.RdBu)
+    fig = px.histogram(data, x=x, y=y, color_discrete_sequence=px.colors.sequential.Aggrnyl)
     return fig, data
 
 
@@ -65,14 +65,14 @@ opcion_z = st.radio(label="  ",
 def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
     data = df.copy()
     data = data[data["Nom_municipio"] == Nom_municipio_filter]
-    fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdBu)
+    fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.Aggrnyl)
     return fig, data
 
 
 pl, c = pie_simple(datos, "total_hogares", opcion_z, opcion_nom)
 st.plotly_chart(pl,use_container_width=True)
 
-st.markdown("Grafica que muestra el porcentaje  y el total de hogares que Si O No cuentan con servios publicos.")
+st.markdown("Grafica que muestra el porcentaje  y el total de hogares que si y no cuentan con servios publicos.")
 
 col1, col2, col3 = st.columns(3)
 with col1:
@@ -94,7 +94,7 @@ with col1:
     def luz_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
         data = df.copy()
         data = data[data["Nom_municipio"] == Nom_municipio_filter]
-        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdPu)
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.Aggrnyl)
         return fig, data
 
 
@@ -118,7 +118,7 @@ with col2:
     def agua_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
         data = df.copy()
         data = data[data["Nom_municipio"] == Nom_municipio_filter]
-        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdPu)
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.Aggrnyl)
         return fig, data
 
 
@@ -141,7 +141,7 @@ with col3:
     def gas_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
         data = df.copy()
         data = data[data["Nom_municipio"] == Nom_municipio_filter]
-        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdPu)
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.Aggrnyl)
         return fig, data
 
     plotG, c = pie_simple(datos, "total_hogares", opcion_a, opcion_nom)
@@ -166,7 +166,7 @@ with colum1:
     def alc_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
         data = df.copy()
         data = data[data["Nom_municipio"] == Nom_municipio_filter]
-        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdBu)
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.Aggrnyl)
         return fig, data
 
     plotAc, c = alc_simple(datos, "total_hogares", opcion_b, opcion_nom)
@@ -190,7 +190,7 @@ with colum2:
     def basuras_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
         data = df.copy()
         data = data[data["Nom_municipio"] == Nom_municipio_filter]
-        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdBu)
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.Aggrnyl)
         return fig, data
 
     plotB, c = basuras_simple(datos, "total_hogares", opcion_b, opcion_nom)
@@ -214,7 +214,7 @@ with colum3:
     def internet_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
         data = df.copy()
         data = data[data["Nom_municipio"] == Nom_municipio_filter]
-        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.RdBu)
+        fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.Aggrnyl)
         return fig, data
 
     plotI, c = internet_simple(datos, "total_hogares", opcion_b, opcion_nom)
