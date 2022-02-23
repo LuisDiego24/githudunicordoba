@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
+url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQHLedstzxMCoJYgyYDeywW01s8vJ3hQzty-ATB8QC64CR2SMwvEaSxwwPze2c1coLeHh8vfemJJbu5/pub?gid=788685982&single=true&output=csv'
 st.set_page_config(layout="wide")
 st.sidebar.markdown("## Censo en el departamento de cordoba")
 st.sidebar.markdown("Lista oficial de los habitantes de cordoba, con indicación de sus condiciones sociales, económicas, etc.")
@@ -9,7 +10,7 @@ st.sidebar.markdown("Lista oficial de los habitantes de cordoba, con indicación
 def cargar_datos(filename:str):
     return pd.read_csv(filename)
 
-datos = cargar_datos('depurado.csv')
+datos = cargar_datos(url)
 
 
 
@@ -20,20 +21,20 @@ lista_nom = list(datos['Nom_municipio'].unique())
 opcion_nom = st.sidebar.selectbox(label="Selecione su municipio: ",
                           options=lista_nom)
 
-otras_variable = list(datos.columns)
-otras_variable.pop(otras_variable.index('estrato'))
-otras_variable.pop(otras_variable.index('total_hogares'))
-otras_variable.pop(otras_variable.index('energia_electrica'))
-otras_variable.pop(otras_variable.index('servicio_gas'))
-otras_variable.pop(otras_variable.index('servicio_acueducto'))
-otras_variable.pop(otras_variable.index('servicio_alcantarillado'))
-otras_variable.pop(otras_variable.index('recoleccion_basuras'))
-otras_variable.pop(otras_variable.index('servicio_internet'))
+servicios = list(datos.columns)
+servicios.pop(servicios.index('Nom_municipio'))
+servicios.pop(servicios.index('total_hogares'))
+servicios.pop(servicios.index('estrato'))
+servicios.pop(servicios.index('energia_electrica'))
+servicios.pop(servicios.index('servicio_gas'))
+servicios.pop(servicios.index('servicio_acueducto'))
+servicios.pop(servicios.index('servicio_alcantarillado'))
+servicios.pop(servicios.index('recoleccion_basuras'))
+servicios.pop(servicios.index('servicio_internet'))
+select_servicios = st.selectbox('Seleciona los servicios', options=servicios)
 
-st.markdown("Grafica que muestra los hogares que pueden haber en una municipio.")
+st.markdown("Grafica descripcion de los hogares que hay en un municipio.")
 
-opcion_y = st.radio(label=" ",
-                    options=otras_variable)
 
 @st.cache
 def p_simple(df: pd.DataFrame, x: pd.DataFrame, y, N_filter: str):
@@ -43,7 +44,7 @@ def p_simple(df: pd.DataFrame, x: pd.DataFrame, y, N_filter: str):
     return fig, data
 
 
-p, c = p_simple(datos, opcion_y, "total_hogares", opcion_nom)
+p, c = p_simple(datos, select_servicios, "total_hogares", opcion_nom)
 st.plotly_chart(p, use_container_width=True)
 
 variables = list(datos.columns)
@@ -55,6 +56,12 @@ variables.pop(variables.index('servicio_acueducto'))
 variables.pop(variables.index('servicio_alcantarillado'))
 variables.pop(variables.index('recoleccion_basuras'))
 variables.pop(variables.index('servicio_internet'))
+variables.pop(variables.index('descripcion_uso_vivienda'))
+variables.pop(variables.index('descripcion_tipo_vivienda'))
+variables.pop(variables.index('descripcion_condicion_ocupacion'))
+variables.pop(variables.index('descripcion_material_pared'))
+variables.pop(variables.index('descripcion_material_piso'))
+variables.pop(variables.index('descripcion_tipo_servicio_sanitario'))
 
 st.markdown("Grafica que muestra la sumatoria de los hogares por municipio y cual es estrato.")
 
@@ -85,6 +92,12 @@ with col1:
     varia.pop(varia.index('servicio_alcantarillado'))
     varia.pop(varia.index('recoleccion_basuras'))
     varia.pop(varia.index('servicio_internet'))
+    varia.pop(varia.index('descripcion_uso_vivienda'))
+    varia.pop(varia.index('descripcion_tipo_vivienda'))
+    varia.pop(varia.index('descripcion_condicion_ocupacion'))
+    varia.pop(varia.index('descripcion_material_pared'))
+    varia.pop(varia.index('descripcion_material_piso'))
+    varia.pop(varia.index('descripcion_tipo_servicio_sanitario'))
 
     opcion_a = st.radio(label="",
                         options=varia)
@@ -98,7 +111,7 @@ with col1:
         return fig, data
 
 
-    plotE, c = pie_simple(datos, "total_hogares", opcion_a, opcion_nom)
+    plotE, c = luz_simple(datos, "total_hogares", opcion_a, opcion_nom)
     st.plotly_chart(plotE, use_container_width=True)
 with col2:
     varias = list(datos.columns)
@@ -110,6 +123,12 @@ with col2:
     varias.pop(varias.index('servicio_alcantarillado'))
     varias.pop(varias.index('recoleccion_basuras'))
     varias.pop(varias.index('servicio_internet'))
+    varias.pop(varias.index('descripcion_uso_vivienda'))
+    varias.pop(varias.index('descripcion_tipo_vivienda'))
+    varias.pop(varias.index('descripcion_condicion_ocupacion'))
+    varias.pop(varias.index('descripcion_material_pared'))
+    varias.pop(varias.index('descripcion_material_piso'))
+    varias.pop(varias.index('descripcion_tipo_servicio_sanitario'))
     opcion_a = st.radio(label="",
                         options=varias)
 
@@ -122,20 +141,26 @@ with col2:
         return fig, data
 
 
-    plotA, c = pie_simple(datos, "total_hogares", opcion_a, opcion_nom)
+    plotA, c = agua_simple(datos, "total_hogares", opcion_a, opcion_nom)
     st.plotly_chart(plotA, use_container_width=True)
 with col3:
-    variacines = list(datos.columns)
-    variacines.pop(variacines.index('Nom_municipio'))
-    variacines.pop(variacines.index('total_hogares'))
-    variacines.pop(variacines.index('estrato'))
-    variacines.pop(variacines.index('servicio_acueducto'))
-    variacines.pop(variacines.index('energia_electrica'))
-    variacines.pop(variacines.index('servicio_alcantarillado'))
-    variacines.pop(variacines.index('recoleccion_basuras'))
-    variacines.pop(variacines.index('servicio_internet'))
+    variaciones = list(datos.columns)
+    variaciones.pop(variaciones.index('Nom_municipio'))
+    variaciones.pop(variaciones.index('total_hogares'))
+    variaciones.pop(variaciones.index('estrato'))
+    variaciones.pop(variaciones.index('servicio_acueducto'))
+    variaciones.pop(variaciones.index('energia_electrica'))
+    variaciones.pop(variaciones.index('servicio_alcantarillado'))
+    variaciones.pop(variaciones.index('recoleccion_basuras'))
+    variaciones.pop(variaciones.index('servicio_internet'))
+    variaciones.pop(variaciones.index('descripcion_uso_vivienda'))
+    variaciones.pop(variaciones.index('descripcion_tipo_vivienda'))
+    variaciones.pop(variaciones.index('descripcion_condicion_ocupacion'))
+    variaciones.pop(variaciones.index('descripcion_material_pared'))
+    variaciones.pop(variaciones.index('descripcion_material_piso'))
+    variaciones.pop(variaciones.index('descripcion_tipo_servicio_sanitario'))
     opcion_a = st.radio(label=" ",
-                        options=variacines)
+                        options=variaciones)
 
     @st.cache
     def gas_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
@@ -144,7 +169,7 @@ with col3:
         fig = px.pie(data, values=x, names=y, color_discrete_sequence=px.colors.sequential.Aggrnyl)
         return fig, data
 
-    plotG, c = pie_simple(datos, "total_hogares", opcion_a, opcion_nom)
+    plotG, c = gas_simple(datos, "total_hogares", opcion_a, opcion_nom)
     st.plotly_chart(plotG, use_container_width=True)
 
 colum1, colum2, colum3 = st.columns(3)
@@ -158,6 +183,12 @@ with colum1:
     variar.pop(variar.index('servicio_gas'))
     variar.pop(variar.index('recoleccion_basuras'))
     variar.pop(variar.index('servicio_internet'))
+    variar.pop(variar.index('descripcion_uso_vivienda'))
+    variar.pop(variar.index('descripcion_tipo_vivienda'))
+    variar.pop(variar.index('descripcion_condicion_ocupacion'))
+    variar.pop(variar.index('descripcion_material_pared'))
+    variar.pop(variar.index('descripcion_material_piso'))
+    variar.pop(variar.index('descripcion_tipo_servicio_sanitario'))
     opcion_b = st.radio(label="          ",
                         options=variar)
 
@@ -182,6 +213,12 @@ with colum2:
     otras.pop(otras.index('servicio_acueducto'))
     otras.pop(otras.index('servicio_alcantarillado'))
     otras.pop(otras.index('servicio_internet'))
+    otras.pop(otras.index('descripcion_uso_vivienda'))
+    otras.pop(otras.index('descripcion_tipo_vivienda'))
+    otras.pop(otras.index('descripcion_condicion_ocupacion'))
+    otras.pop(otras.index('descripcion_material_pared'))
+    otras.pop(otras.index('descripcion_material_piso'))
+    otras.pop(otras.index('descripcion_tipo_servicio_sanitario'))
     opcion_b = st.radio(label="      ",
                         options=otras)
 
@@ -206,7 +243,13 @@ with colum3:
     otros.pop(otros.index('servicio_gas'))
     otros.pop(otros.index('servicio_alcantarillado'))
     otros.pop(otros.index('recoleccion_basuras'))
-    opcion_b = st.radio(label="       ",
+    otros.pop(otros.index('descripcion_uso_vivienda'))
+    otros.pop(otros.index('descripcion_tipo_vivienda'))
+    otros.pop(otros.index('descripcion_condicion_ocupacion'))
+    otros.pop(otros.index('descripcion_material_pared'))
+    otros.pop(otros.index('descripcion_material_piso'))
+    otros.pop(otros.index('descripcion_tipo_servicio_sanitario'))
+    opcion_b = st.radio(label="           ",
                         options=otros)
 
 
