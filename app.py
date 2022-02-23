@@ -31,7 +31,7 @@ servicios.pop(servicios.index('servicio_acueducto'))
 servicios.pop(servicios.index('servicio_alcantarillado'))
 servicios.pop(servicios.index('recoleccion_basuras'))
 servicios.pop(servicios.index('servicio_internet'))
-select_servicios = st.selectbox('Seleciona los servicios', options=servicios)
+select_servicios = st.selectbox('Seleciona una descripcion', options=servicios)
 
 st.markdown("Grafica descripcion de los hogares que hay en un municipio.")
 
