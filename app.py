@@ -4,7 +4,7 @@ import plotly.express as px
 
 url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSLl_Vn1NvAWYTPuwu8PVXFN9BrAd4gdBbyTIfpDDLdjucELrQRtm9pg9DdL-q-xsjsEVKPCEnBB378/pub?gid=888799103&single=true&output=csv'
 st.set_page_config(layout="wide")
-st.sidebar.markdown('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Colombia_Dane_logo.svg/2560px-Colombia_Dane_logo.svg.png')
+st.sidebar.markdown("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Colombia_Dane_logo.svg/2560px-Colombia_Dane_logo.svg.png")
 st.sidebar.markdown("## Censo en el departamento de córdoba")
 st.sidebar.markdown("Lista oficial de los habitantes de córdoba, con indicación de sus condiciones sociales, económicas, etc.")
 @st.cache
