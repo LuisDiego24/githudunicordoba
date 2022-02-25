@@ -13,7 +13,6 @@ def cargar_datos(filename:str):
 datos = cargar_datos(url)
 
 
-
 st.sidebar.markdown("---")
 
 st.markdown("##  Descripcion las vivienda por municipio donde pueden encontrar su uso, tipo, su ocupacion, etc.")
@@ -47,6 +46,18 @@ def p_simple(df: pd.DataFrame, x: pd.DataFrame, y, N_filter: str):
 
 p, c = p_simple(datos, select_servicios, "TOTAL HOGARES", opcion_nom)
 st.plotly_chart(p, use_container_width=True)
+
+
+@st.cache
+def p_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
+    data = df.copy()
+    data = data[data["MUNICIPIOS"] == Nom_municipio_filter]
+    fig = px.density_heatmap(data, x=x, y=y, color_continuous_scale=px.colors.sequential.Emrld)
+    return fig, data
+
+
+p, c = p_simple(datos, select_servicios, "TOTAL HOGARES", opcion_nom)
+st.plotly_chart(p,use_container_width=True)
 
 variables = list(datos.columns)
 variables.pop(variables.index('MUNICIPIOS'))
@@ -83,7 +94,7 @@ def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
 pl, c = pie_simple(datos, "TOTAL HOGARES", opcion_z, opcion_nom)
 st.plotly_chart(pl,use_container_width=True)
 
-st.markdown("Grafica que muestra el porcentaje  y el total de hogares cuentan y no con servios publicos.")
+st.markdown("Grafica que muestra el porcentaje  y el total de hogares que si y no cuentan con servios publicos.")
 
 col1, col2 = st.columns(2)
 
