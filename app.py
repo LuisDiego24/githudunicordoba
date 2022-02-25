@@ -4,8 +4,8 @@ import plotly.express as px
 
 url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSLl_Vn1NvAWYTPuwu8PVXFN9BrAd4gdBbyTIfpDDLdjucELrQRtm9pg9DdL-q-xsjsEVKPCEnBB378/pub?gid=888799103&single=true&output=csv'
 st.set_page_config(layout="wide")
-st.sidebar.markdown("## Censo en el departamento de cordoba")
-st.sidebar.markdown("Lista oficial de los habitantes de cordoba, con indicación de sus condiciones sociales, económicas, etc.")
+st.sidebar.markdown("## Censo en el departamento de córdoba")
+st.sidebar.markdown("Lista oficial de los habitantes de córdoba, con indicación de sus condiciones sociales, económicas, etc.")
 @st.cache
 def cargar_datos(filename:str):
     return pd.read_csv(filename)
@@ -16,6 +16,7 @@ datos = cargar_datos(url)
 
 st.sidebar.markdown("---")
 
+st.markdown("##  Descripcion las vivienda por municipio donde pueden encontrar su uso, tipo, su ocupacion, etc.")
 
 lista_nom = list(datos['MUNICIPIOS'].unique())
 opcion_nom = st.sidebar.selectbox(label="Selecione su municipio: ",
@@ -82,7 +83,7 @@ def pie_simple(df: pd.DataFrame, x: pd.DataFrame, y, Nom_municipio_filter: str):
 pl, c = pie_simple(datos, "TOTAL HOGARES", opcion_z, opcion_nom)
 st.plotly_chart(pl,use_container_width=True)
 
-st.markdown("Grafica que muestra el porcentaje  y el total de hogares que si y no cuentan con servios publicos.")
+st.markdown("Grafica que muestra el porcentaje  y el total de hogares cuentan y no con servios publicos.")
 
 col1, col2 = st.columns(2)
 
