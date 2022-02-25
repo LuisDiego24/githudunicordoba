@@ -15,7 +15,7 @@ datos = cargar_datos(url)
 
 st.sidebar.markdown("---")
 
-st.markdown("##  Descripcion las vivienda por municipio donde pueden encontrar su uso, tipo, su ocupacion, etc.")
+st.markdown("Descripcion las vivienda por municipio donde pueden encontrar su uso, tipo, su ocupacion, etc.")
 
 lista_nom = list(datos['MUNICIPIOS'].unique())
 opcion_nom = st.sidebar.selectbox(label="Selecione su municipio: ",
