@@ -32,9 +32,9 @@ servicios.pop(servicios.index('SERVICIO DE ACUEDUCTO'))
 servicios.pop(servicios.index('SERVICIO DE ALCANTARILLADO'))
 servicios.pop(servicios.index('RECOLECCION BASURAS'))
 servicios.pop(servicios.index('SERVICIO DE INTERNET'))
-select_servicios = st.selectbox('Seleciona los servicios', options=servicios)
+select_servicios = st.selectbox('Seleciona la descripción', options=servicios)
 
-st.markdown("Grafica descripcion de los hogares que hay en un municipio.")
+st.markdown("Grafica de la descripción de los hogares que hay en un municipio.")
 
 
 @st.cache
