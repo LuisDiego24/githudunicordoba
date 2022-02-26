@@ -76,11 +76,9 @@ variables.pop(variables.index('DESCRIPCION MATERIAL PARED'))
 variables.pop(variables.index('DESCRIPCION MATERIAL PISO'))
 variables.pop(variables.index('DESCRIPCION TIPO SERVICIO SANITARIO'))
 
-st.markdown("Grafica que muestra la sumatoria de los hogares por municipio y cual es estrato.")
-
 opcion_z = st.radio(label="  ",
                     options=variables)
-
+st.markdown("Grafica que muestra la sumatoria de los hogares por municipio y los cuales estan dividivo por el estrato.")
 count = c.shape[0]
 st.write('TOTAL DE HOGARES EN', opcion_nom ,count)
 
