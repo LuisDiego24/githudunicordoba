@@ -1,3 +1,3 @@
-Link Repositorio github: https://docs.google.com/spreadsheets/d/e/2PACX-1vSLl_Vn1NvAWYTPuwu8PVXFN9BrAd4gdBbyTIfpDDLdjucELrQRtm9pg9DdL-q-xsjsEVKPCEnBB378/pub?gid=888799103&single=true&output=csv
+Link dataset montado a driver: https://docs.google.com/spreadsheets/d/e/2PACX-1vSLl_Vn1NvAWYTPuwu8PVXFN9BrAd4gdBbyTIfpDDLdjucELrQRtm9pg9DdL-q-xsjsEVKPCEnBB378/pub?gid=888799103&single=true&output=csv
 
-Link dtaset: https://github.com/LuisDiego24/
+Link Repositorio github: https://github.com/LuisDiego24/
